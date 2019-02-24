@@ -49,8 +49,7 @@ public class Client {
 			in = new DataInputStream(socket.getInputStream());
 			out = new DataOutputStream(socket.getOutputStream());
 			
-			
-			
+		
 			//Send the request
 			out.writeUTF(request);
 			
