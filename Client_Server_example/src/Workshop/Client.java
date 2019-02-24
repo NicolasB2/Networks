@@ -17,7 +17,7 @@ public class Client {
 	/**
 	 * David's IP Address
 	 */
-	public static final String david = "172.30.190.176";
+	public static final String david = "10.172.202.149";
 	/**
 	 * Free port to establish connection
 	 */
@@ -40,7 +40,7 @@ public class Client {
 			
 			System.out.println("*****Cliente disponible para ser atendido*****");
 			
-			socket = new Socket(david, PORT);
+			socket = new Socket("localhost", PORT);
 			String request = br.readLine();
 		
 			System.out.println("Ingrese la frase que desea encriptar");
