@@ -1,5 +1,6 @@
 package broadcasting;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -11,7 +12,14 @@ public class Server {
 	Server(int port){
 		
 		sockets = new Socket[10];
-		 serverSocket = new ServerSocket(Integer.valueOf(puerto));
-         System.out.println("Inicializando el servidor... [Ok].");
+		 try {
+			serverSocket = new ServerSocket(port);
+			System.out.println("Inicializando el servidor... [Ok].");
+			Socket socket = serverSocket.accept();
+            System.out.println("Nueva conexion entrante");
+            
+		} catch (IOException e) {
+		}
+         
 	}
 }
