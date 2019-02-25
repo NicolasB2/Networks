@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-public class Read_client_thread {
+public class Read_client_thread extends Thread {
 
 	private DataInputStream in;
 
@@ -16,13 +16,17 @@ public class Read_client_thread {
 		this.in = in;
 	}
 
+	@Override
 	public void run() {
 		
-		
+		System.out.println("listo para leer");
 		try {
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-			String mensajeDelServidor = in.readUTF();
-			bw.write("la frase encriptada es: " + mensajeDelServidor);
+			while (true) {
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+				String mensajeDelServidor = in.readUTF();
+				bw.write("la frase encriptada es: " + mensajeDelServidor);
+			}
+			
 			
 		} catch (IOException e) {
 			

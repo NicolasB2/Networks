@@ -26,7 +26,11 @@ public class Client {
 			out = new DataOutputStream(socket.getOutputStream());
 			System.out.println("Connected");
 			
+			Read_client_thread rct = new Read_client_thread(in);
+			Write_client_thread wct = new Write_client_thread(out);
 			
+			rct.start();
+			wct.start();
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -34,4 +38,7 @@ public class Client {
 
 	}
 
+	public static void main(String[] args) {
+		Client c = new Client("localhost", 8000);
+	}
 }

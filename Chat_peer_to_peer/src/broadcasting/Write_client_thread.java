@@ -15,18 +15,21 @@ public class Write_client_thread extends Thread {
 		this.out = out;
 	}
 
+	@Override
 	public void run() {
-		
+
+		System.out.println("listo para escribir");
 		
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			String text = br.readLine();
-			out.writeUTF(text);
-			
+			while (true) {
+				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+				String text = br.readLine();
+				out.writeUTF(text);
+			}
+
 		} catch (IOException e) {
-			
+
 		}
-		
-		
-    }
+
+	}
 }
