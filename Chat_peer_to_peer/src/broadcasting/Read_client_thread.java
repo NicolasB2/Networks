@@ -11,9 +11,11 @@ import java.io.OutputStreamWriter;
 public class Read_client_thread extends Thread {
 
 	private DataInputStream in;
+	private BufferedWriter bw;
 
 	public Read_client_thread(DataInputStream in) {
 		this.in = in;
+		this.bw = bw;
 	}
 
 	@Override
@@ -22,9 +24,8 @@ public class Read_client_thread extends Thread {
 		System.out.println("listo para leer");
 		try {
 			while (true) {
-				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-				String mensajeDelServidor = in.readUTF();
-				bw.write("la frase encriptada es: " + mensajeDelServidor);
+				String text = in.readUTF();
+				System.out.println(text);
 			}
 			
 			

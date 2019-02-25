@@ -11,7 +11,6 @@ public class Write_client_thread extends Thread {
 	private DataOutputStream out;
 
 	public Write_client_thread(DataOutputStream out) {
-//		this.socket = socket;
 		this.out = out;
 	}
 
@@ -19,11 +18,12 @@ public class Write_client_thread extends Thread {
 	public void run() {
 
 		System.out.println("listo para escribir");
-		
+
 		try {
 			while (true) {
 				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 				String text = br.readLine();
+				System.out.println("-");
 				out.writeUTF(text);
 			}
 

@@ -23,13 +23,17 @@ public class Server {
             System.out.println("Nueva conexion entrante");
             
             socket = serverSocket.accept();
-            in = new DataInputStream(socket.getInputStream());
-			out = new DataOutputStream(socket.getOutputStream());
             
-			String client_Request = in.readUTF();
-			System.out.println("El mensaje enviado por el cliente fue : " + client_Request);
+            while(true) {
+            	in = new DataInputStream(socket.getInputStream());
+            	out = new DataOutputStream(socket.getOutputStream());
+                
+    			String client_Request = in.readUTF();
+    			System.out.println("El mensaje enviado por el cliente fue : " + client_Request);
+    			
+    			out.writeUTF("okay");
+            }
 			
-			out.writeUTF("okay");
 			
 		} catch (IOException e) {
 		}
