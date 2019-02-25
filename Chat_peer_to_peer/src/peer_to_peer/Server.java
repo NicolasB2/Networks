@@ -57,26 +57,9 @@ public class Server {
 
 			}
 
-			// String fraseMayusculas = frase.toUpperCase();
 		}
 	}
-	/*
-	 * private static String manejoDeDatos(String frase) { double valor = 0;
-	 * String[] caracteres = frase.split(","); switch (caracteres[1]) { case "-":
-	 * valor = Integer.parseInt(caracteres[0].trim()) -
-	 * Integer.parseInt(caracteres[2].trim()); break;
-	 * 
-	 * case "*": valor = Integer.parseInt(caracteres[0].trim()) *
-	 * Integer.parseInt(caracteres[2].trim()); break;
-	 * 
-	 * case "/": valor = Integer.parseInt(caracteres[0].trim()) /
-	 * Integer.parseInt(caracteres[2].trim()); break;
-	 * 
-	 * default: int x = Integer.parseInt(caracteres[0].trim()); int y =
-	 * Integer.parseInt(caracteres[2].trim()); valor = x + y; break; }
-	 * 
-	 * return valor + ""; }
-	 */
+
 
 	private static String manejoDeDatos1(String frase) {
 		String mensaje = "";
