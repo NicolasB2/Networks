@@ -1,4 +1,4 @@
-package Unicasting;
+package unicasting;
 
 import java.io.*;
 import java.net.*;

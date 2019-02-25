@@ -1,4 +1,4 @@
-package chat;
+package peer_to_peer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
