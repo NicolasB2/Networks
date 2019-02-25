@@ -26,8 +26,8 @@ public class Client {
 			out = new DataOutputStream(socket.getOutputStream());
 			System.out.println("Connected");
 			
-			Read_client_thread rct = new Read_client_thread(in);
-			Write_client_thread wct = new Write_client_thread(out);
+			Client_read_thread rct = new Client_read_thread(in);
+			Client_write_thread wct = new Client_write_thread(out);
 			
 			rct.start();
 			wct.start();

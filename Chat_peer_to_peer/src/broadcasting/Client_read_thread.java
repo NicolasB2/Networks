@@ -8,14 +8,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-public class Read_client_thread extends Thread {
+public class Client_read_thread extends Thread {
 
 	private DataInputStream in;
-	private BufferedWriter bw;
 
-	public Read_client_thread(DataInputStream in) {
+
+	public Client_read_thread(DataInputStream in) {
 		this.in = in;
-		this.bw = bw;
 	}
 
 	@Override
