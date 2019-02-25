@@ -17,7 +17,7 @@ public class Client {
 	/**
 	 * David's IP Address
 	 */
-	public static final String david = "10.172.202.149";
+	public static final String david = "172.30.164.23";
 	/**
 	 * Free port to establish connection
 	 */
