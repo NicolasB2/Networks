@@ -2,7 +2,7 @@
  * @author Nicolas Biojo Bermeo & David Alejandro Erazo Ochoa
  * @version 03/02/2019
  */
-package Workshop;
+package Strings;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

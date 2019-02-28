@@ -3,7 +3,7 @@
  * @version 03/02/2019
  */
 
-package Workshop;
+package Strings;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
