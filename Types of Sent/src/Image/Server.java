@@ -29,20 +29,28 @@ public class Server {
 
 	}
 
-	public void send_image(Socket socket) throws IOException {
+	/**
+	 * method that send a image to the client
+	 */
+	private void send_image(Socket socket) {
+		System.out.println("send image");
+		try {
 
-		OutputStream outputStream = socket.getOutputStream();
+			OutputStream outputStream = socket.getOutputStream();
 
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		BufferedImage image = ImageIO.read(new File("C:\\Users\\erazo\\Desktop\\imagen.png"));
-		ImageIO.write(image, "jpg", byteArrayOutputStream);
+			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+			BufferedImage image = ImageIO.read(new File("src/sources/imagen.png"));
+			ImageIO.write(image, "jpg", byteArrayOutputStream);
 
-		byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
-		System.out.println(byteArrayOutputStream.size());
-		outputStream.write(byteArrayOutputStream.toByteArray());
+			byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
+			outputStream.write(byteArrayOutputStream.toByteArray());
 
-		outputStream.close();
-		socket.close();
+			outputStream.close();
+			socket.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {

@@ -25,27 +25,34 @@ public class Client {
 			e.printStackTrace();
 		} 
 		
-		reviceImage();	
+		reciveImage();	
 	}
 
 	
-	public static void reviceImage() {
+	/**
+	 * Method that allows the client to receive an image
+	 */ 
+	public static void reciveImage() {
 
 		try {
-
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader( System.in));
+			System.out.println("Enter the name do you want to save image");
+			String name = br.readLine();
+			
+			
+			System.out.println("recive image");
 			java.io.InputStream inputStream = socket.getInputStream();
-			System.out.println(inputStream);
 			byte[] imageAr = new byte[62500];
 			inputStream.read(imageAr);
 			BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageAr));
-			System.out.println(
-					"Received " + image.getHeight() + "x" + image.getWidth() + ": " + System.currentTimeMillis());
-			ImageIO.write(image, "jpg", new File("C:\\Users\\erazo\\Desktop\\imagen2.png"));
+			System.out.println("Received " + image.getHeight() + "x" + image.getWidth() + ": " + System.currentTimeMillis());
+			ImageIO.write(image, "jpg", new File("src/sources/"+name+".png"));
 
 		} catch (UnknownHostException e) {
-			System.out.println(e);
+			e.printStackTrace();
 		} catch (IOException e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 
 	}
