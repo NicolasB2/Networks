@@ -28,26 +28,35 @@ public class Client {
 		recivefile();
 	}
 
+	/**
+	 * Method that allows the client to receive an txt file
+	 */ 	
 	public static void recivefile() {
 		try {
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader( System.in));
+			
+			
+			System.out.println("recive file");
 			InputStream in = null;
 			OutputStream out = null;
-
-			in = socket.getInputStream();
-			out = new FileOutputStream("F:\\ESCRITORIO\\prueba8.txt ");
 			
+			System.out.println("Enter the name do you want to save .txt file");
+			String name = br.readLine();
+			
+			
+			in = socket.getInputStream();
+			out = new FileOutputStream("src/sources/"+name+".txt");
+
 			byte[] bytes = new byte[16 * 1024];
 
-			
-			int count =in.read(bytes);
-			while (count  > 0) {
+			int count;
+			while ((count = in.read(bytes)) > 0) {
 				out.write(bytes, 0, count);
-				count =in.read(bytes);
 			}
 
-			
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			System.out.println();
 		}
 	}
 

@@ -30,20 +30,28 @@ public class Server {
 	}
 
 	
-	public void send_file(Socket socket) throws IOException {
+	/**
+	 * method that send a file .txt to the client
+	 */
+	private void send_file(Socket socket) {
+		System.out.println("send file");
+		try {
 
-		File file = new File("F:\\ESCRITORIO\\prueba.txt ");
+			File file = new File("src/sources/prueba.txt");
 
-		long length = file.length();
-		byte[] bytes = new byte[16 * 1024];
-		FileInputStream in = new FileInputStream(file);
-		OutputStream out = socket.getOutputStream();
+			long length = file.length();
+			byte[] bytes = new byte[16 * 1024];
+			FileInputStream in = new FileInputStream(file);
+			OutputStream out = socket.getOutputStream();
 
-		int count;
-		while ((count = in.read(bytes)) > 0) {
-			out.write(bytes, 0, count);
+			int count = in.read(bytes);
+			while (count > 0) {
+				out.write(bytes, 0, count);
+				count = in.read(bytes);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 	}
 
 

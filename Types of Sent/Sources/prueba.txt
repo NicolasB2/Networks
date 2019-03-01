@@ -1,0 +1,9 @@
+This workshop is about:
+- Broadcasting: Send image to 10 clients
+- Multicasting: Send .txt file to 5 clients
+
+Developed by: 
+Nicolas Biojo 
+David Erazo
+
+
