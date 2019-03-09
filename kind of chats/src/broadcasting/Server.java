@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Server {
 
-	private Server_Recive_Thread serverRecive;
+	private ArrayList<Server_Recive_Thread> serverRecive;
 	private Server_Send_Thread serverSend;
 
 	private ArrayList<String> mensajes;
@@ -30,37 +30,27 @@ public class Server {
 			sockets = new ArrayList<>();
 			mensajes = new ArrayList<>();
 			
+			serverRecive = new ArrayList<>();
+			
 			for (int i = 0; i <number_clients; i++) {
-				sockets.add(serverSocket.accept());
-				System.out.println("Client was connected");		
+				Socket s = serverSocket.accept();
+				sockets.add(s);
+				System.out.println("Client was connected");	
+				serverRecive.add(new Server_Recive_Thread(this,s));
 			}
 
+			
 			serverSend = new Server_Send_Thread(this);
 			serverSend.start();
 
-			serverRecive = new Server_Recive_Thread(this);
-//			serverRecive.start();
+			for (int i = 0; i < serverRecive.size(); i++) {
+				serverRecive.get(i).start();
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-	}
-
-	public Server_Recive_Thread getServer_Recive_Thread() {
-		return serverRecive;
-	}
-
-	public void setHiloEscuchaUser(Server_Recive_Thread hiloEscuchaUser) {
-		this.serverRecive = hiloEscuchaUser;
-	}
-
-	public Server_Send_Thread getHiloEnvio() {
-		return serverSend;
-	}
-
-	public void setHiloEnvio(Server_Send_Thread hiloEnvio) {
-		this.serverSend = hiloEnvio;
 	}
 
 	public static ServerSocket getServerSocketReceived() {

@@ -8,10 +8,12 @@ import java.net.Socket;
 public class Server_Recive_Thread extends Thread {
 
 	private Server server;
-
-	public Server_Recive_Thread(Server server) {
+private Socket socket;
+	
+	public Server_Recive_Thread(Server server,Socket socket) {
 
 		this.server = server;
+		this.socket = socket;
 	}
 
 	public void run() {
@@ -19,17 +21,15 @@ public class Server_Recive_Thread extends Thread {
 		try {
 
 			DataInputStream in;
-
+			System.out.println("start recive thread");
 			while (server.isServerConected()) {
 
-				if (server.isSendMulticast()) {
-					Socket socketReceived = server.getServerSocketReceived().accept();
-					in = new DataInputStream(socketReceived.getInputStream());
-					String mensajeObtenidoCliente = in.readUTF();
-					server.nuevoMensaje(mensajeObtenidoCliente);
-					Thread.sleep(1);
-					server.setSendMulticast(true);
-				}
+				in = new DataInputStream(socket.getInputStream());
+				String mensajeObtenidoCliente = in.readUTF();
+				System.out.println(mensajeObtenidoCliente);
+				server.nuevoMensaje(mensajeObtenidoCliente);
+				server.setSendMulticast(true);
+
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
