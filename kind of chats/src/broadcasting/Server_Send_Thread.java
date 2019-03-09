@@ -24,20 +24,19 @@ public class Server_Send_Thread extends Thread{
 			System.out.println("start send thread");
 			while(server.isServerConected()) {
 				
-				if(server.isSendMulticast() && server.getMensajes().size() >0) {
+				if(server.isSendMulticast() && !server.lastMessage().equals("")) {
 					
 
 					for (int i = 0; i < server.getSockets().size(); i++) {
 						Socket actual  = server.getSockets().get(i);
 						out = new DataOutputStream(actual.getOutputStream());
-						for (int j = 0; j < server.getMensajes().size() ; j++) {
-							String mensaje = server.getMensajes().get(j);
+						
+							String mensaje = server.lastMessage();
 							out.writeUTF(mensaje);
-						}
+						
 					}
 					
-					server.eraseMessages();
-//					server.setSendMulticast(false);
+					server.setSendMulticast(false);
 			
 				}
 		}

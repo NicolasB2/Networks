@@ -33,7 +33,7 @@ public class Client_Sendd_Thread extends Thread {
 
 				socket = client.getSocketSend();
 				out = new DataOutputStream(socket.getOutputStream());
-				mensaje += br.readLine();
+				mensaje = br.readLine();
 				out.writeUTF(mensaje);
 
 			}

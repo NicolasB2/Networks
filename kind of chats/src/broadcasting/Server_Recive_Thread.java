@@ -25,9 +25,9 @@ private Socket socket;
 			while (server.isServerConected()) {
 
 				in = new DataInputStream(socket.getInputStream());
-				String mensajeObtenidoCliente = in.readUTF();
-				System.out.println(mensajeObtenidoCliente);
-				server.nuevoMensaje(mensajeObtenidoCliente);
+				String messege = in.readUTF();
+				System.out.println(messege);
+				server.newMessege(messege);
 				server.setSendMulticast(true);
 
 			}

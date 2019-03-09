@@ -10,36 +10,35 @@ public class Server {
 	private ArrayList<Server_Recive_Thread> serverRecive;
 	private Server_Send_Thread serverSend;
 
-	private ArrayList<String> mensajes;
+	private ArrayList<String> messeges;
 	private ArrayList<Socket> sockets;
 
 	private static ServerSocket serverSocket;
 	private boolean isServerConected;
 	private boolean sendMulticast;
 
-	public Server(int port,int number_clients) {
+	public Server(int port, int number_clients) {
 
 		try {
 
 			System.out.println("Server on line");
 			serverSocket = new ServerSocket(port);
-			
+
 			isServerConected = true;
 			sendMulticast = false;
-			
+
 			sockets = new ArrayList<>();
-			mensajes = new ArrayList<>();
-			
+			messeges = new ArrayList<>();
+
 			serverRecive = new ArrayList<>();
-			
-			for (int i = 0; i <number_clients; i++) {
+
+			for (int i = 0; i < number_clients; i++) {
 				Socket s = serverSocket.accept();
 				sockets.add(s);
-				System.out.println("Client was connected");	
-				serverRecive.add(new Server_Recive_Thread(this,s));
+				System.out.println("Client was connected");
+				serverRecive.add(new Server_Recive_Thread(this, s));
 			}
 
-			
 			serverSend = new Server_Send_Thread(this);
 			serverSend.start();
 
@@ -51,19 +50,6 @@ public class Server {
 			e.printStackTrace();
 		}
 
-	}
-
-	public static ServerSocket getServerSocketReceived() {
-		return serverSocket;
-	}
-
-
-	public ArrayList<Socket> getSockets() {
-		return sockets;
-	}
-
-	public void setSockets(ArrayList<Socket> sockets) {
-		this.sockets = sockets;
 	}
 
 	public boolean isServerConected() {
@@ -82,29 +68,24 @@ public class Server {
 		this.sendMulticast = sendMulticast;
 	}
 
-	public ArrayList<String> getMensajes() {
-		return mensajes;
+	public void newMessege(String mensajeObtenidoCliente) {
+		messeges.add(mensajeObtenidoCliente);
 	}
 
-	public void setMensajes(ArrayList<String> mensajes) {
-		this.mensajes = mensajes;
+	public ArrayList<Socket> getSockets() {
+		return sockets;
 	}
 
-	public void eraseMessages() {
-
-		mensajes = new ArrayList<>();
-
-	}
-
-	public void nuevoMensaje(String mensajeObtenidoCliente) {
-
-		mensajes.add(mensajeObtenidoCliente);
-
+	public String lastMessage() {
+		if (messeges.size() > 0) {
+			return messeges.get(messeges.size() - 1);
+		}
+		return "";
 	}
 
 	public static void main(String[] args) {
-		
-		Server s = new Server(8000,2);
+
+		Server s = new Server(8000, 2);
 
 	}
 }
