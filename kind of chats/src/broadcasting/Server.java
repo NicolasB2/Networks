@@ -1,46 +1,116 @@
 package broadcasting;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Server {
 
-	private static ServerSocket serverSocket;// Socket which allowing connection whit clients
-	private static Server_Send_Thread[] threads;// Array with the threads
-	public String data;// String whit last messege
+	private Server_Recive_Thread hiloEscuchaUser;
+	private Server_Send_Thread hiloEnvio;
 
-	/**
-	 * Server's constructor
-	 * @param port : number of free port to establish connection
-	 */
+	private ArrayList<String> mensajes;
+	private ArrayList<Socket> sockets;
+	
+
+	private static ServerSocket serverSocket;
+	private boolean isServerConected;
+	private boolean sendMulticast;
+
 	public Server(int port) {
-		threads = new Server_Send_Thread[10];
 
 		try {
-			serverSocket = new ServerSocket(port);
-			System.out.println("Inicializando el servidor... [Ok].");
-			System.out.println("waiting for clients.......");
+
+			System.out.println("::SERVIDOR CHAT ICESI :ON ::");
+
+			isServerConected = true;
 
 
+			serverSocket = new ServerSocket();
 
-		}catch(
+			sockets = new ArrayList<>();
 
-	Exception e)
-	{
-		e.printStackTrace();
+			mensajes = new ArrayList<>();
+
+			hiloEnvio = new Server_Send_Thread(this);
+			hiloEnvio.start();
+
+			hiloEscuchaUser = new Server_Recive_Thread(this);
+			hiloEscuchaUser.start();
+
+			sendMulticast = false;
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
+	public Server_Recive_Thread getHiloEscuchaUser() {
+		return hiloEscuchaUser;
 	}
 
-	/**
-	 * Main method
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Server s = new Server(8000);
+	public void setHiloEscuchaUser(Server_Recive_Thread hiloEscuchaUser) {
+		this.hiloEscuchaUser = hiloEscuchaUser;
+	}
+
+	public Server_Send_Thread getHiloEnvio() {
+		return hiloEnvio;
+	}
+
+	public void setHiloEnvio(Server_Send_Thread hiloEnvio) {
+		this.hiloEnvio = hiloEnvio;
+	}
+
+	public static ServerSocket getServerSocketReceived() {
+		return serverSocket;
+	}
+
+
+	public ArrayList<Socket> getSockets() {
+		return sockets;
+	}
+
+	public void setSockets(ArrayList<Socket> sockets) {
+		this.sockets = sockets;
+	}
+
+	public boolean isServerConected() {
+		return isServerConected;
+	}
+
+	public void setServerConected(boolean isServerConected) {
+		this.isServerConected = isServerConected;
+	}
+
+	public boolean isSendMulticast() {
+		return sendMulticast;
+	}
+
+	public void setSendMulticast(boolean sendMulticast) {
+		this.sendMulticast = sendMulticast;
+	}
+
+	public ArrayList<String> getMensajes() {
+		return mensajes;
+	}
+
+	public void setMensajes(ArrayList<String> mensajes) {
+		this.mensajes = mensajes;
+	}
+
+	public void eraseMessages() {
+
+		mensajes = new ArrayList<>();
+
+	}
+
+	public void nuevoMensaje(String mensajeObtenidoCliente) {
+
+		mensajes.add(mensajeObtenidoCliente);
+
 	}
 
 }

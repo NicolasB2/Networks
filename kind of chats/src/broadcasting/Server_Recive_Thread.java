@@ -1,15 +1,43 @@
 package broadcasting;
 
-public class Server_Recive_Thread extends Thread {
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 
-	public Server_Recive_Thread() {
-		// TODO Auto-generated constructor stub
-	}
+public class Server_Recive_Thread extends Thread {
 	
-	@Override
+	private Server server;
+	
+	public Server_Recive_Thread(Server server) {
+		
+		this.server = server;
+	}
+
+	
 	public void run() {
-		// TODO Auto-generated method stub
-		super.run();
+		
+		try {
+			
+			
+			DataInputStream in;
+			
+			while(server.isServerConected()) {
+				Socket socketReceived = server.getServerSocketReceived().accept();
+				in = new DataInputStream(socketReceived.getInputStream());
+				String mensajeObtenidoCliente = in.readUTF();
+				server.nuevoMensaje(mensajeObtenidoCliente);
+				Thread.sleep(1);
+				server.setSendMulticast(true);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+		
+		
 	}
-	
+
 }
