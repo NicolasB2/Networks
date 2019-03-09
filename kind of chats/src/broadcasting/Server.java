@@ -14,8 +14,9 @@ public class Server {
 	private ArrayList<Socket> sockets;
 
 	private static ServerSocket serverSocket;
-	private boolean isServerConected;
 	private boolean sendMulticast;
+
+	private int sender;
 
 	public Server(int port, int number_clients) {
 
@@ -23,9 +24,8 @@ public class Server {
 
 			System.out.println("Server on line");
 			serverSocket = new ServerSocket(port);
-
-			isServerConected = true;
 			sendMulticast = false;
+			sender = -1;
 
 			sockets = new ArrayList<>();
 			messeges = new ArrayList<>();
@@ -36,7 +36,7 @@ public class Server {
 				Socket s = serverSocket.accept();
 				sockets.add(s);
 				System.out.println("Client was connected");
-				serverRecive.add(new Server_Recive_Thread(this, s));
+				serverRecive.add(new Server_Recive_Thread(this, s, i));
 			}
 
 			serverSend = new Server_Send_Thread(this);
@@ -52,12 +52,8 @@ public class Server {
 
 	}
 
-	public boolean isServerConected() {
-		return isServerConected;
-	}
-
-	public void setServerConected(boolean isServerConected) {
-		this.isServerConected = isServerConected;
+	public ArrayList<Socket> getSockets() {
+		return sockets;
 	}
 
 	public boolean isSendMulticast() {
@@ -68,12 +64,16 @@ public class Server {
 		this.sendMulticast = sendMulticast;
 	}
 
-	public void newMessege(String mensajeObtenidoCliente) {
-		messeges.add(mensajeObtenidoCliente);
+	public int getSender() {
+		return sender;
 	}
 
-	public ArrayList<Socket> getSockets() {
-		return sockets;
+	public void setSender(int sender) {
+		this.sender = sender;
+	}
+
+	public void newMessege(String mensajeObtenidoCliente) {
+		messeges.add(mensajeObtenidoCliente);
 	}
 
 	public String lastMessage() {
@@ -85,7 +85,7 @@ public class Server {
 
 	public static void main(String[] args) {
 
-		Server s = new Server(8000, 2);
+		Server s = new Server(8000, 3);
 
 	}
 }

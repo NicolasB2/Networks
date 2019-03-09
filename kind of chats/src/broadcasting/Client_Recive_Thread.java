@@ -6,44 +6,34 @@ import java.io.DataOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-
 public class Client_Recive_Thread extends Thread {
 
-	
-	public Client cliente;
-	
-	public Client_Recive_Thread(Client cliente) {
+	public Client client;
 
-		this.cliente = cliente;
+	public Client_Recive_Thread(Client client) {
+
+		this.client = client;
 	}
-	
-	
+
 	public void run() {
-		
+
 		DataInputStream in;
-		Socket socket ;
+		Socket socket;
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		try {
-			
-			while(cliente.isClientConected()) {
-//				socket = cliente.getSocketReceive();
-				socket = cliente.getSocketSend();
+
+			while (client.isClientConected()) {
+				socket = client.getSocketSend();
 				in = new DataInputStream(socket.getInputStream());
-				String mensajeDelServidor = in.readUTF();
-				bw.write(mensajeDelServidor.replaceAll(";", " : ")+"\n");
+				String message = in.readUTF();
+				System.out.println(message);
 				bw.flush();
 			}
-			
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
-	
+
 }

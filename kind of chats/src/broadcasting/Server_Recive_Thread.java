@@ -9,11 +9,13 @@ public class Server_Recive_Thread extends Thread {
 
 	private Server server;
 private Socket socket;
+private int number;
 	
-	public Server_Recive_Thread(Server server,Socket socket) {
+	public Server_Recive_Thread(Server server,Socket socket, int number) {
 
 		this.server = server;
 		this.socket = socket;
+		this.number = number;
 	}
 
 	public void run() {
@@ -22,11 +24,12 @@ private Socket socket;
 
 			DataInputStream in;
 			System.out.println("start recive thread");
-			while (server.isServerConected()) {
+			while (true) {
 
 				in = new DataInputStream(socket.getInputStream());
 				String messege = in.readUTF();
 				System.out.println(messege);
+				server.setSender(number);
 				server.newMessege(messege);
 				server.setSendMulticast(true);
 
