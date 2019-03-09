@@ -1,37 +1,47 @@
 package broadcasting;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
 
-	public String serverIp;// server's IP address
-	public int port;// Free port to establish connection
-	private static Socket socket;// Socket which allowing connection
+	private String serverIp;// server's IP address
+	private int port;// Free port to establish connection
+	private String nickname; //user's nickname
+	
+	private static Socket socket; // Socket which allowing connection
+	private boolean isClientConected; //control boolean
+	
+	private Client_Receive_Thread receive;//thread which allow receive strings 
+	private Client_Send_Thread send;////thread which allow send strings 
 
-	private boolean isClientConected;
-
-	private Client_Recive_Thread hiloAtentoServer;
-
-	private Client_Sendd_Thread hiloEnvioMensajes;
-
-	public Client(String serverIp, int port) {
+	public Client(String serverIp, int port, String nickname) {
 
 		this.port = port;
 		this.serverIp = serverIp;
+		this.nickname = nickname;
 
 		try {
 			System.out.println("Welcome to the nicolás chat");
 			socket = new Socket(serverIp, port);
+			System.out.println("_________________________________");
 			isClientConected = true;
-			hiloAtentoServer = new Client_Recive_Thread(this);
-			hiloAtentoServer.start();
-			hiloEnvioMensajes = new Client_Sendd_Thread(this);
-			hiloEnvioMensajes.start();
+			receive = new Client_Receive_Thread(this);
+			receive.start();
+			send = new Client_Send_Thread(this);
+			send.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	
+	public String getNickname() {
+		return nickname;
 	}
 
 	public static Socket getSocketSend() {
@@ -40,22 +50,6 @@ public class Client {
 
 	public static void setSocketSend(Socket socketSend) {
 		Client.socket = socketSend;
-	}
-
-	public Client_Recive_Thread getHiloAtentoServer() {
-		return hiloAtentoServer;
-	}
-
-	public void setHiloAtentoServer(Client_Recive_Thread hiloAtentoServer) {
-		this.hiloAtentoServer = hiloAtentoServer;
-	}
-
-	public Client_Sendd_Thread getHiloEnvioMensajes() {
-		return hiloEnvioMensajes;
-	}
-
-	public void setHiloEnvioMensajes(Client_Sendd_Thread hiloEnvioMensajes) {
-		this.hiloEnvioMensajes = hiloEnvioMensajes;
 	}
 
 	public boolean isClientConected() {
@@ -68,8 +62,16 @@ public class Client {
 
 	public static void main(String[] args) {
 
-		Client c = new Client("localhost", 8000);
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("please enter your nickname");
+		try {
+			String nickname = br.readLine();
+			Client c = new Client("localhost", 8000 , nickname);
 
+		} catch (IOException e) {
+			
+		}
+	
 	}
 
 }

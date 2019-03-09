@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Server {
 
-	private ArrayList<Server_Recive_Thread> serverRecive;
+	private ArrayList<Server_Receive_Thread> serverRecive;
 	private Server_Send_Thread serverSend;
 
 	private ArrayList<String> messeges;
@@ -36,7 +36,7 @@ public class Server {
 				Socket s = serverSocket.accept();
 				sockets.add(s);
 				System.out.println("Client was connected");
-				serverRecive.add(new Server_Recive_Thread(this, s, i));
+				serverRecive.add(new Server_Receive_Thread(this, s, i));
 			}
 
 			serverSend = new Server_Send_Thread(this);

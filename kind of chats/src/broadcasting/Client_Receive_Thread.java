@@ -6,11 +6,11 @@ import java.io.DataOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-public class Client_Recive_Thread extends Thread {
+public class Client_Receive_Thread extends Thread {
 
 	public Client client;
 
-	public Client_Recive_Thread(Client client) {
+	public Client_Receive_Thread(Client client) {
 
 		this.client = client;
 	}

@@ -5,13 +5,13 @@ import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server_Recive_Thread extends Thread {
+public class Server_Receive_Thread extends Thread {
 
 	private Server server;
-private Socket socket;
-private int number;
-	
-	public Server_Recive_Thread(Server server,Socket socket, int number) {
+	private Socket socket;
+	private int number;
+
+	public Server_Receive_Thread(Server server, Socket socket, int number) {
 
 		this.server = server;
 		this.socket = socket;

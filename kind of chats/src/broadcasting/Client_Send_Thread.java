@@ -9,16 +9,15 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client_Sendd_Thread extends Thread {
+public class Client_Send_Thread extends Thread {
 
 	public Client client;
 
-	public Client_Sendd_Thread(Client cliente) {
+	public Client_Send_Thread(Client client) {
 
-		this.client = cliente;
-
+		this.client = client;
 	}
-
+	
 	public void run() {
 
 		try {
@@ -33,7 +32,7 @@ public class Client_Sendd_Thread extends Thread {
 
 				socket = client.getSocketSend();
 				out = new DataOutputStream(socket.getOutputStream());
-				mensaje = br.readLine();
+				mensaje = "["+client.getNickname()+"]: "+br.readLine();
 				out.writeUTF(mensaje);
 
 			}
