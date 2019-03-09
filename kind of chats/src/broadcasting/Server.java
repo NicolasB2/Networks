@@ -7,61 +7,60 @@ import java.util.ArrayList;
 
 public class Server {
 
-	private Server_Recive_Thread hiloEscuchaUser;
-	private Server_Send_Thread hiloEnvio;
+	private Server_Recive_Thread serverRecive;
+	private Server_Send_Thread serverSend;
 
 	private ArrayList<String> mensajes;
 	private ArrayList<Socket> sockets;
-	
 
 	private static ServerSocket serverSocket;
 	private boolean isServerConected;
 	private boolean sendMulticast;
 
-	public Server(int port) {
+	public Server(int port,int number_clients) {
 
 		try {
 
-			System.out.println("::SERVIDOR CHAT ICESI :ON ::");
-
+			System.out.println("Server on line");
+			serverSocket = new ServerSocket(port);
+			
 			isServerConected = true;
-
-
-			serverSocket = new ServerSocket();
-
-			sockets = new ArrayList<>();
-
-			mensajes = new ArrayList<>();
-
-			hiloEnvio = new Server_Send_Thread(this);
-			hiloEnvio.start();
-
-			hiloEscuchaUser = new Server_Recive_Thread(this);
-			hiloEscuchaUser.start();
-
 			sendMulticast = false;
+			
+			sockets = new ArrayList<>();
+			mensajes = new ArrayList<>();
+			
+			for (int i = 0; i <number_clients; i++) {
+				sockets.add(serverSocket.accept());
+				System.out.println("Client was connected");		
+			}
+
+			serverSend = new Server_Send_Thread(this);
+			serverSend.start();
+
+			serverRecive = new Server_Recive_Thread(this);
+//			serverRecive.start();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-	public Server_Recive_Thread getHiloEscuchaUser() {
-		return hiloEscuchaUser;
+	public Server_Recive_Thread getServer_Recive_Thread() {
+		return serverRecive;
 	}
 
 	public void setHiloEscuchaUser(Server_Recive_Thread hiloEscuchaUser) {
-		this.hiloEscuchaUser = hiloEscuchaUser;
+		this.serverRecive = hiloEscuchaUser;
 	}
 
 	public Server_Send_Thread getHiloEnvio() {
-		return hiloEnvio;
+		return serverSend;
 	}
 
 	public void setHiloEnvio(Server_Send_Thread hiloEnvio) {
-		this.hiloEnvio = hiloEnvio;
+		this.serverSend = hiloEnvio;
 	}
 
 	public static ServerSocket getServerSocketReceived() {
@@ -113,4 +112,9 @@ public class Server {
 
 	}
 
+	public static void main(String[] args) {
+		
+		Server s = new Server(8000,2);
+
+	}
 }

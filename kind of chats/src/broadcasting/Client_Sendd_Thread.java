@@ -35,7 +35,6 @@ public class Client_Sendd_Thread extends Thread {
 //				System.out.println("inicio hilo de envio de mensajes");
 				socket = client.getSocketSend();
 				out = new DataOutputStream(socket.getOutputStream());
-				mensaje = client.getNickName() + ";";
 				mensaje += scan.nextLine();
 				out.writeUTF(mensaje);
 					
