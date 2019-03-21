@@ -66,7 +66,7 @@ public class Client {
 		System.out.println("please enter your nickname");
 		try {
 			String nickname = br.readLine();
-			Client c = new Client("localhost", 8000 , nickname);
+			Client c = new Client("172.30.177.133", 8000 , nickname);
 
 		} catch (IOException e) {
 			
