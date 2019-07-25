@@ -1,6 +1,6 @@
 # Networks
-*Workshops about networks* <br>
-**topics**
+*Workshops about networks* <br/>
+<br>**topics**
 - client/server
 - type of seanding
 - kind of chats
